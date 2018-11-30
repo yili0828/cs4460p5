@@ -460,6 +460,44 @@
 		                .attr("width",widthPlot)
 		                .attr("height",heightPlot);
 
+		    // Define brush 1
+			var brush = d3.svg.brush()
+			.extent([[0, 0],[widthPlot, heightPlot]]);
+
+			// Set scales for brush. 
+			brush.x(xScale).y(yScale);
+
+			// 3. bind brush to DOM
+			var brushContainer1 = chart4.append("g")
+				.attr("class", "brush")
+				.call(brush);
+
+			// Register brush events
+			brush
+				.on("brushstart", brushstart)   // when mousedown&dragging starts 
+				.on("brush", brushing)          // when dragging
+				.on("brushend", brushend);      // when mouseup
+
+
+			// Define brush 2
+			var brush2 = d3.svg.brush()
+			.extent([[0, 0],[widthPlot, heightPlot]]);
+
+			// Set scales for brush. 
+			brush2.x(xScale2).y(yScale2);
+
+			// 3. bind brush to DOM
+			var brushContainer2 = chart5.append("g")
+				.attr("class", "brush2")
+				.call(brush2);
+
+			// Register brush events
+			brush2
+				.on("brushstart", brush2start)   // when mousedown&dragging starts 
+				.on("brush", brushing2)          // when dragging
+				.on("brushend", brush2end);      // when mouseup
+
+
 			var temp1= chart4.selectAll("circle")
 					.data(csv)
 					.enter()
@@ -747,23 +785,7 @@
         		.style("font", "23px avenir")
 
 			// ------------------------------------------------------
-			// Define brush 1
-			var brush = d3.svg.brush()
-			.extent([[0, 0],[widthPlot, heightPlot]]);
 
-			// Set scales for brush. 
-			brush.x(xScale).y(yScale);
-
-			// 3. bind brush to DOM
-			var brushContainer1 = chart4.append("g")
-				.attr("class", "brush")
-				.call(brush);
-
-			// Register brush events
-			brush
-				.on("brushstart", brushstart)   // when mousedown&dragging starts 
-				.on("brush", brushing)          // when dragging
-				.on("brushend", brushend);      // when mouseup
 
 			function brushstart() {
 				brushContainer2.call(brush2.clear());
@@ -797,23 +819,7 @@
 			}
 
 			// --------------------------------------------------------
-			// Define brush 2
-			var brush2 = d3.svg.brush()
-			.extent([[0, 0],[widthPlot, heightPlot]]);
-
-			// Set scales for brush. 
-			brush2.x(xScale2).y(yScale2);
-
-			// 3. bind brush to DOM
-			var brushContainer2 = chart5.append("g")
-				.attr("class", "brush2")
-				.call(brush2);
-
-			// Register brush events
-			brush2
-				.on("brushstart", brush2start)   // when mousedown&dragging starts 
-				.on("brush", brushing2)          // when dragging
-				.on("brushend", brush2end);      // when mouseup
+			
 
 			function brush2start() {
 				brushContainer1.call(brush.clear());
